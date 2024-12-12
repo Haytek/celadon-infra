@@ -1,0 +1,29 @@
+﻿name: deploy
+
+on:
+  push:
+    branches: [ "master" ]
+  worflow_dispatch:
+
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: terraform init
+        run: terraform init
+
+      - name: terraform plan
+        run: terraform plan
